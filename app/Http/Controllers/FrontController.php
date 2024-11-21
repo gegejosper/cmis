@@ -3,31 +3,49 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Campus;
-use App\Models\Student;
-use App\Models\Course;
+use App\Models\Deceased;
+use App\Models\Graveyard;
+use Illuminate\Support\Facades\Http;
 
 class FrontController extends Controller
 {
     public function index(){
-        $campuses = Campus::all(['campus_name', 'map_color', 'address']);
-        //$students = Student::with('course_details', 'campus_details', 'scholarship_details')->where('status', 'active')->get(['municipality', 'province', 'campus_id', 'course_id', 'scholarship_id']);
-        $students = Student::with('course_details', 'campus_details', 'scholarship_details')
-            ->where('status', 'active')
-            ->get(['municipality', 'province', 'campus_id', 'course_id', 'scholarship_id'])
-            ->groupBy(function($item) {
-                return $item->municipality . ', ' . $item->province;
-            });
-        //dd($students);
-        return view('welcome', compact('campuses', 'students'));
+
+        return view('welcome');
     }
-    public function campus(){
-        $campuses = Campus::all();
-        return view('campus', compact('campuses'));
+
+    public function about() {
+        return view('about');
     }
-    public function statistics(){
-        $campuses = Campus::all();
-        return view('statistics', compact('campuses'));
+
+    public function contact() {
+        return view('contact');
     }
-    //
+
+    public function locations() {
+        $graveyards = Graveyard::with('block_details')->get();
+        return view('locations', compact('graveyards'));
+    }
+    public function view_locations($graveyard_id) {
+        $graveyard = Graveyard::with('block_details.deceased_details')->findOrFail($graveyard_id);
+        //dd($graveyard);
+        return view('location', compact('graveyard'));
+    }
+    public function search() {
+        return view('search');
+    }
+    public function gallery() {
+        return view('gallery');
+    }
+    public function search_result(Request $req) {
+        $searchTerm = '%'.$req->q.'%';
+        $keyword = $req->q;
+        $deceaseds = Deceased::where(function($query) use ($searchTerm){
+                            $query->where('first_name','LIKE', $searchTerm)
+                            ->orWhere('last_name','LIKE', $searchTerm);
+                        })->orderBy('last_name', 'asc')
+                        ->orderBy('first_name', 'asc')
+                        ->with('block_details', 'graveyard_details')->get();
+        return view('search', compact('deceaseds'));
+    }
 }

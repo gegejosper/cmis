@@ -21,7 +21,9 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        //
+        // Register your route middleware
+        // $middleware->add('gate', \App\Http\Middleware\GateMiddleware::class);
+        // $middleware->add('role', \App\Http\Middleware\RoleMiddleware::class);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
