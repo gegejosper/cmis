@@ -1,6 +1,6 @@
 @extends('layouts.front')
 @section('content_front')
-<div class="position-relative overflow-hidden text-center bg-light" style="min-height:800px;background:url({{asset('assets/img/header.jpg')}}); background-size:cover; background-position:bottom;">
+<div class="position-relative overflow-hidden text-center bg-light" style="min-height:800px;background:url({{asset('assets/img/header.JPG')}}); background-size:cover; background-position:bottom;">
     <div class="col-md-8 p-lg-5 mx-auto mb-5">
       &nbsp;
       <!-- <p class="lead fw-normal">WELCOME</p>
