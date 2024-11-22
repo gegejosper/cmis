@@ -57,7 +57,7 @@
                             <td>{{ $index + 1 }}</td>
                             <td>{{ $deceased->first_name }}</td>
                             <td>{{ $deceased->last_name }}</td>
-                            <td>{{ $deceased->date_of_burial ?? 'N/A' }}</td>
+                            <td>{{ $deceased->dob ?? 'N/A' }}</td>
                             <td>{{ $deceased->block_details->block_name ?? 'N/A' }}</td>
                             <td>{{ $deceased->graveyard_details->graveyard_name ?? 'N/A' }}</td>
                         </tr>
