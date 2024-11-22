@@ -51,18 +51,24 @@
                         <p class="mb-0 text-white">{{ $block->block_name }}</p>
                         @if($block->status == 'not available')
                             <!-- Deceased Initials -->
-                            <span 
+                            <!-- <span 
                                 class="deceased-details" 
                                 data-id="{{ $block->id }}"
-                                data-first-name="{{ $block->deceased_details->first_name }}"
-                                data-last-name="{{ $block->deceased_details->last_name }}"
-                                data-age="{{ $block->deceased_details->age }}"
-                                data-date-of-burial="{{ $block->deceased_details->dob }}"
-                                data-remarks="{{ $block->deceased_details->remarks ?? 'N/A' }}"
                                 data-bs-toggle="modal" 
                                 data-bs-target="#deceasedModal"
                             >
-                                {{ strtoupper(substr($block->deceased_details->first_name, 0, 1)) }}{{ strtoupper(substr($block->deceased_details->last_name, 0, 1)) }}
+                                
+                            </span> -->
+
+                            <span 
+                                class="deceased-details text-center" 
+                                data-block-id="{{ $block->id }}" 
+                                data-deceased="{{ $block->deceased_details->toJson() }}"
+                                data-bs-toggle="modal" 
+                                data-bs-target="#deceasedModal"
+                                style="font-size:8px;"
+                            >
+                               NOT AVAILABLE
                             </span>
                         @endif
                     </div>
@@ -81,28 +87,56 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <p><strong>First Name:</strong> <span id="modal-first-name"></span></p>
-                    <p><strong>Last Name:</strong> <span id="modal-last-name"></span></p>
-                    <p><strong>Date of Burial:</strong> <span id="modal-date-of-burial"></span></p>
+                    <div id="modal-deceased-list">
+                        <!-- Dynamic content will be injected here -->
+                    </div>
                 </div>
             </div>
         </div>
     </div>
     <script>
         // jQuery to update modal content dynamically
-        $(document).on('click', '.deceased-details', function() {
-            let first_name = $(this).data('first-name');
-            let last_name = $(this).data('last-name');
-            let age = $(this).data('age');
-            let date_of_burial = $(this).data('date-of-burial');
-            let remarks = $(this).data('remarks');
-            console.log(first_name);
-            // Update modal content
-            $('#modal-first-name').text(first_name);
-            $('#modal-last-name').text(last_name);
-            $('#modal-age').text(age);
-            $('#modal-date-of-burial').text(date_of_burial);
-            $('#modal-remarks').text(remarks);
+        // $(document).on('click', '.deceased-details', function() {
+        //     let first_name = $(this).data('first-name');
+        //     let last_name = $(this).data('last-name');
+        //     let age = $(this).data('age');
+        //     let date_of_burial = $(this).data('date-of-burial');
+        //     let remarks = $(this).data('remarks');
+        //     console.log(first_name);
+        //     // Update modal content
+        //     $('#modal-first-name').text(first_name);
+        //     $('#modal-last-name').text(last_name);
+        //     $('#modal-age').text(age);
+        //     $('#modal-date-of-burial').text(date_of_burial);
+        //     $('#modal-remarks').text(remarks);
+        // });
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const deceasedDetailsTriggers = document.querySelectorAll('.deceased-details');
+            const modalDeceasedList = document.getElementById('modal-deceased-list');
+
+            deceasedDetailsTriggers.forEach(trigger => {
+                trigger.addEventListener('click', function () {
+                    // Clear previous modal content
+                    modalDeceasedList.innerHTML = '';
+
+                    // Parse deceased details from data attribute
+                    const deceasedDetails = JSON.parse(this.getAttribute('data-deceased'));
+
+                    // Populate the modal with each deceased person's details
+                    deceasedDetails.forEach(deceased => {
+                        const deceasedInfo = `
+                            <div class="deceased-item">
+                                <p><strong>First Name:</strong> ${deceased.first_name}</p>
+                                <p><strong>Last Name:</strong> ${deceased.last_name}</p>
+                                <p><strong>Date of Burial:</strong> ${deceased.dob || 'N/A'}</p>
+                                <hr>
+                            </div>
+                        `;
+                        modalDeceasedList.innerHTML += deceasedInfo;
+                    });
+                });
+            });
         });
     </script>
 @endsection
