@@ -35,7 +35,7 @@
                                 <th>Name</th>
                                 <th>Email</th>
                                 <th>Role</th>
-                                <th>Action</th>
+                                <!-- <th>Action</th> -->
                             </tr>
                         </thead>
                         <tbody>
@@ -45,11 +45,11 @@
                                     <td>{{ $user->name }}</td>
                                     <td>{{ $user->email }}</td>
                                     <td>{{ $user->role_details->role->name}}</td>
-                                    <td>
+                                    <!-- <td>
                                         <a class="btn btn-warning btn-sm" href="{{ route('panel.deceaseds.edit', $user->id) }}">
                                             <i class="fa fa-pencil"></i>
                                         </a>
-                                    </td>
+                                    </td> -->
                                 </tr>
                             @endforeach
                         </tbody>
