@@ -32,8 +32,11 @@ Route::middleware('auth')->name('panel.')->prefix('panel/')->group(function () {
     Route::resource('visitors', VisitorController::class);
     Route::resource('users', UserController::class);
     Route::post('deceaseds/search', [AdminController::class, 'search_deceaseds']);
-    Route::resource('graveyards', GraveyardController::class);
-    Route::resource('blocks', BlockController::class);
+    Route::middleware('can:access-admin')->group(function(){
+        Route::resource('graveyards', GraveyardController::class);
+        Route::resource('blocks', BlockController::class);
+    });
+    
     Route::resource('visitors', VisitorController::class);
 });
 Route::middleware('auth')->name('panel.')->prefix('panel/')->group(function () {
