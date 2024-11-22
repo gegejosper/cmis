@@ -25,14 +25,30 @@
                     <a class="navbar-brand" href="/"> Providence Memorial Park</a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                            <li class="nav-item px-3"><a class="nav-link" href="/">Home</a></li>
-                            <li class="nav-item border-start px-3"><a class="nav-link" href="/about">About</a></li>
-                            <li class="nav-item border-start px-3"><a class="nav-link" href="/contact">Contact</a></li>
-                            <li class="nav-item border-start px-3"><a class="nav-link" href="/gallery">Gallery</a></li>
-                            <li class="nav-item border-start px-3"><a class="nav-link" href="/locations">Locations</a></li>
-                            <li class="nav-item border-start px-3"><a class="nav-link" href="/search">Search</a></li>
-                        </ul>
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                        <li class="nav-item px-3"><a class="nav-link" href="/">Home</a></li>
+                        <li class="nav-item border-start px-3"><a class="nav-link" href="/about">About</a></li>
+                        <li class="nav-item border-start px-3"><a class="nav-link" href="/contact">Contact</a></li>
+                        <li class="nav-item border-start px-3"><a class="nav-link" href="/gallery">Gallery</a></li>
+                        <li class="nav-item border-start px-3"><a class="nav-link" href="/gardens">Gardens</a></li>
+                        <li class="nav-item border-start px-3"><a class="nav-link" href="/search">Search</a></li>
+
+                        <!-- Logout button for authenticated users -->
+                        @auth
+                            <li class="nav-item px-3 border-start">
+                                <form method="POST" action="{{ route('logout') }}">
+                                    @csrf
+                                    <a class="nav-link"
+                                    href="{{ route('logout') }}"
+                                    onclick="event.preventDefault(); this.closest('form').submit();">
+                                        <span class="sb-nav-link-icon"><i class="fas fa-lock"></i></span>
+                                        <span class="sb-nav-link-text">Logout</span>
+                                    </a>
+                                </form>
+                            </li>
+                        @endauth
+
+                    </ul>
                     </div>
                 </div>
             </nav>

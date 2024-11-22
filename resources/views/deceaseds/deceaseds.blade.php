@@ -115,11 +115,11 @@
                         </div>
                         <div class="col-md-6">
                             <label class="form-label">Date</label>
-                            <input type="date" name="date" value="{{ old('date') }}" class="form-control" required>
+                            <input type="date" name="date" value="{{ old('date', date('Y-m-d')) }}"  class="form-control" required>
                         </div>
                         <div class="col-md-6">
                             <label class="form-label">Time</label>
-                            <input type="time" name="time_in" value="{{ old('time_in') }}" class="form-control" required>
+                            <input type="time" name="time_in" value="{{ old('time_in', date('H:i')) }}" class="form-control" required>
                         </div>
                     </div>
                     <input type="hidden" name="deceased_id" id="deceased_id">

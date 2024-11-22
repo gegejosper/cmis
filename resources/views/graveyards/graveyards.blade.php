@@ -3,63 +3,90 @@
 <div id="layoutSidenav_content">
     <main>
         <div class="container-fluid px-4">
-            <h1 class="mt-4">Graveyards</h1>
-            <ol class="breadcrumb mb-4">
-                <li class="breadcrumb-item active">List of Graveyard</li>
-                <li class="breadcrumb-item">
-                    <a href="/panel/dashboard" class="btn btn-warning">
-                        <i class="fa fa-reply"></i>
-                    </a>
-                    
-                </li>
-            </ol>
-            <div class="row">
-                <div class="col-lg-8">
-                    
+            <h1 class="mt-4 text-center text-primary">Graveyards</h1>
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+
+                    <!-- Success Alert -->
                     @if (session('success'))
-                        <div class="alert alert-success">
-                            {{ session('success') }}
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            <i class="fa fa-check-circle"></i> {{ session('success') }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
                     @endif
-                    <div class="card p-4">
-                        <div class="card-header">
-                            <div class="card-toolbar">
-                            <a href="/panel/graveyards/create" class="btn btn-info">
-                        Add Graveyard
-                    </a>
-                            </div>
+
+                    <!-- Graveyard List Card -->
+                    <div class="card shadow-sm">
+                        <div class="card-header bg-info text-white d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0"><i class="fa fa-list"></i> Graveyard List</h5>
+                            <a href="/panel/graveyards/create" class="btn btn-light btn-sm">
+                                <i class="fa fa-plus"></i> Add Graveyard
+                            </a>
                         </div>
-                    <table class="table datatable-table">
-                        @if(isset($keyword))
-                            <tr><td><em>Search Result for: <span class="text-danger">{{$keyword}}</span></em></td></tr>
-                        @endif
-                        <tr>
-                            <td>GRAVEYARD</td>
-                            <td>BLOCK NUMBERS</td>
-                            <td>AVAILABLE</td>
-                            <td>STATUS</td>
-                            <td>ACTION</td>
-                        </tr>
-                        @foreach($graveyards as $graveyard)
-                            <tr>
-                                <td>{{$graveyard->graveyard_name}}</td>
-                                <td>{{$graveyard->block_numbers}}</td>
-                                <td>{{$graveyard->block_details->where('status', 'available')->count()}}</td>
-                                <td>{{$graveyard->status}}</td>
-                                <td>
-                                    <a class="btn btn-success" href="{{route ('panel.graveyards.show', $graveyard->id) }}"><i class="fa fa-search"> </i></a>
-                                    <a class="btn btn-warning" href="{{route ('panel.graveyards.edit', $graveyard->id) }}"><i class="fa fa-pencil"> </i></a>
-                                    <!-- <form action="{{ route('panel.graveyards.destroy', $graveyard->id) }}" method="POST" style="display:inline;">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-danger"><i class="fa fa-times"> </i></button>
-                                    </form> -->
-                                </td>
-                            </tr>
-                        @endforeach
-                    </table>
+
+                        <div class="card-body">
+                            <!-- Search Results -->
+                            @if (isset($keyword))
+                                <div class="alert alert-info">
+                                    <em><i class="fa fa-search"></i> Search Result for: <strong class="text-danger">{{ $keyword }}</strong></em>
+                                </div>
+                            @endif
+
+                            <!-- Table -->
+                            <div class="table-responsive">
+                                <table class="table table-hover table-bordered">
+                                    <thead class="table-dark">
+                                        <tr>
+                                            <th>Graveyard</th>
+                                            <th>Block Numbers</th>
+                                            <th>Available Blocks</th>
+                                            <th>Status</th>
+                                            <th class="text-center">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($graveyards as $graveyard)
+                                            <tr>
+                                                <td>{{ $graveyard->graveyard_name }}</td>
+                                                <td>{{ $graveyard->block_numbers }}</td>
+                                                <td>{{ $graveyard->block_details->where('status', 'available')->count() }}</td>
+                                                <td>
+                                                    <span class="badge {{ $graveyard->status === 'active' ? 'bg-success' : 'bg-secondary' }}">
+                                                        {{ ucfirst($graveyard->status) }}
+                                                    </span>
+                                                </td>
+                                                <td class="text-center">
+                                                    <a class="btn btn-success btn-sm" href="{{ route('panel.graveyards.show', $graveyard->id) }}" title="View Details">
+                                                        <i class="fa fa-search"></i>
+                                                    </a>
+                                                    <a class="btn btn-warning btn-sm" href="{{ route('panel.graveyards.edit', $graveyard->id) }}" title="Edit">
+                                                        <i class="fa fa-pencil"></i>
+                                                    </a>
+                                                    <!-- Uncomment if delete is needed -->
+                                                    <!--
+                                                    <form action="{{ route('panel.graveyards.destroy', $graveyard->id) }}" method="POST" style="display:inline;">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="btn btn-danger btn-sm" title="Delete">
+                                                            <i class="fa fa-times"></i>
+                                                        </button>
+                                                    </form>
+                                                    -->
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <!-- No Graveyards Found -->
+                            @if ($graveyards->isEmpty())
+                                <div class="text-center mt-3">
+                                    <p class="text-muted"><i class="fa fa-info-circle"></i> No graveyards found.</p>
+                                </div>
+                            @endif
+                        </div>
                     </div>
-                
                 </div>
             </div>
         </div>

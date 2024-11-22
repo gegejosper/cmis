@@ -15,6 +15,7 @@ class Block extends Model
         'status'
     ];
     public function deceased_details(){
-        return $this->belongsTo('App\Models\Deceased', 'id', 'block_id');
+        return $this->hasMany('App\Models\Deceased', 'block_id','id');
     }
+
 }

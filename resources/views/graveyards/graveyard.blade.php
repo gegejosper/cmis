@@ -3,86 +3,104 @@
 <div id="layoutSidenav_content">
     <main>
         <div class="container-fluid px-4">
-            <h1 class="mt-4">Graveyard</h1>
-            <ol class="breadcrumb mb-4">
-                <li class="breadcrumb-item active">Details</li>
-                
-            </ol>
-            <div class="row mt-5" >
+            <!-- Page Title -->
+            <h1 class="mt-4 text-center text-primary">Graveyard Details</h1>
+            <div class="row mt-5">
+                <!-- Graveyard Info Section -->
                 <div class="col-lg-4">
-                    <div class="card">
+                    <div class="card shadow-sm">
                         <div class="card-body">
-                            
-                            <h1>NAME: {{ $graveyard->graveyard_name }}</h1>
-                            <p>Total Blocks: {{ $graveyard->block_numbers }} | Available: {{$number_of_block_available}}</p>
-                            <img src="{{ asset($graveyard->graveyard_image) }}" alt="" class="img-fluid">
+                            <h2 class="h5">Graveyard: <strong>{{ $graveyard->graveyard_name }}</strong></h2>
+                            <p><strong>Total Blocks:</strong> {{ $graveyard->block_numbers }} | <strong>Available:</strong> {{ $number_of_block_available }}</p>
+                            <img src="{{ asset($graveyard->graveyard_image) }}" alt="Graveyard Image" class="img-fluid rounded shadow-sm">
                         </div>
                     </div>
                 </div>
+
+                <!-- Block Details Section -->
                 <div class="col-lg-8">
-                    <div class="card">
-                        <div class="card-header">
-                            <div class="card-toolbar">
-                                <a href="javascript:;" id="add_block" class="btn btn-info add_block" data-graveyard_id="{{$graveyard->id}}">
-                                    Add Block
-                                </a>
-                                <a href="{{ route('panel.graveyards.index') }}" class="btn btn-warning">
-                                        <i class="fa fa-reply"></i>
+                    <div class="card shadow-sm">
+                        <div class="card-header bg-info text-white">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h5 class="mb-0"><i class="fa fa-cogs"></i> Block Details</h5>
+                                <div class="btn-group">
+                                    <a href="javascript:;" id="add_block" class="btn btn-light btn-sm add_block" data-graveyard_id="{{ $graveyard->id }}">
+                                        <i class="fa fa-plus"></i> Add Block
                                     </a>
+                                    <a href="{{ route('panel.graveyards.index') }}" class="btn btn-warning btn-sm">
+                                        <i class="fa fa-reply"></i> Back
+                                    </a>
+                                </div>
                             </div>
                         </div>
+
                         <div class="card-body">
+                            <!-- Success Message -->
                             @if (session('success'))
-                                <div class="alert alert-success">
-                                    {{ session('success') }}
+                                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                    <i class="fa fa-check-circle"></i> {{ session('success') }}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                                 </div>
                             @endif
-                           
-                            <table id="blocks_list" class="table datatable-table">
-                                <thead>
-                                <tr>
-                                    <th>BLOCK NAME</th>
-                                    <th>DECEASED</th>
-                                    <th>STATUS</th>
-                                    <th>ACTION</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach($graveyard->block_details as $block)
+
+                            <!-- Blocks Table -->
+                            <div class="table-responsive">
+                                <table id="blocks_list" class="table table-hover table-bordered">
+                                    <thead class="table-light">
                                         <tr>
-                                            <td>{{$block->block_name}}</td>
-                                            <td>
-                                                @if($block->deceased_details != null )
-                                                {{$block->deceased_details->last_name}}, {{$block->deceased_details->first_name}}
-                                                @else
-                                                N/A
-                                                @endif
-                                            </td>
-                                            <td>{{$block->status}}</td>
-                                            
-                                            <td>
-                                                @if($block->deceased_details == null )
-                                                    <a class="btn btn-info add_deceased" href="javascript:;" data-block_id="{{$block->id}}" data-graveyard_id="{{$graveyard->id}}"><i class="fa fa-plus"> </i></a>
-                                                @endif   
-                                                <a class="btn btn-warning" href="{{route ('panel.blocks.edit', $graveyard->id) }}"><i class="fa fa-pencil"> </i></a>
-                                                <!-- <form action="{{ route('panel.graveyards.destroy', $graveyard->id) }}" method="POST" style="display:inline;">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger"><i class="fa fa-times"> </i></button>
-                                                </form> -->
-                                            </td>
+                                            <th>Block Name</th>
+                                            <th>Deceased</th>
+                                            <th>Status</th>
+                                            <th class="text-center">Actions</th>
                                         </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
+                                    </thead>
+                                    <tbody>
+                                        @foreach($graveyard->block_details as $block)
+                                            <tr>
+                                                <td>{{ $block->block_name }}</td>
+                                                <td>
+                                                    @if($block->deceased_details && $block->deceased_details->isNotEmpty())
+                                                        @foreach($block->deceased_details as $deceased)
+                                                            <a href="{{ route('panel.deceaseds.show', $deceased->id) }}"><span>{{ $deceased->last_name }}, {{ $deceased->first_name }}</span> </a>
+                                                            <br>
+                                                        @endforeach
+                                                    @else
+                                                        <span class="text-muted">N/A</span>
+                                                    @endif
+                                                </td>
+                                                <td>
+                                                    <span class="badge {{ $block->status === 'available' ? 'bg-success' : 'bg-secondary' }}">
+                                                        {{ ucfirst($block->status) }}
+                                                    </span>
+                                                </td>
+                                                <td class="text-center">
+                                                    <a class="btn btn-info btn-sm add_deceased" href="javascript:;" data-block_id="{{ $block->id }}" data-graveyard_id="{{ $graveyard->id }}" title="Add Deceased">
+                                                        <i class="fa fa-plus"></i>
+                                                    </a>
+                                                    <a class="btn btn-warning btn-sm" href="/panel/blocks/{{ $block->id }}/edit" title="Edit Block">
+                                                        <i class="fa fa-pencil"></i>
+                                                    </a>
+                                                    <!-- Uncomment if delete is needed -->
+                                                    <!--
+                                                    <form action="{{ route('panel.graveyards.destroy', $graveyard->id) }}" method="POST" style="display:inline;">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="btn btn-danger btn-sm" title="Delete">
+                                                            <i class="fa fa-times"></i>
+                                                        </button>
+                                                    </form>
+                                                    -->
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-            
-            
         </div>
-        
     </main>
 
     <div id="add-deceased-modal" class="modal modal-lg" style="margin-top:100px; max-height: 500px;" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">

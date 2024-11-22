@@ -8,6 +8,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
+use App\Models\Role_user;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -27,8 +28,29 @@ class AuthenticatedSessionController extends Controller
         $request->authenticate();
 
         $request->session()->regenerate();
-
-        return redirect()->intended(route('panel.dashboard', absolute: false));
+        //dd(Auth::user()->id);
+        $user_id = Auth::user()->id;
+        $role_user = Role_user::where('user_id', $user_id)->first();
+        if($role_user->role_id == '1'){
+            return redirect()->intended(route('panel.dashboard', absolute: false));
+        }
+        else if($role_user->role_id == '2'){
+            return redirect()->intended(route('panel.staff', absolute: false));
+        }
+        else {
+            $redirect_to = '/';
+            return redirect($redirect_to);
+        }
+        // if(Auth::user()->hasRole(['admin'])){
+        //     return redirect()->intended(route('panel.dashboard', absolute: false));
+        // }else if(Auth::user()->hasRole(['staff'])){
+        //     return redirect()->intended(route('panel.staff', absolute: false));
+        // }
+        // else {
+        //     $redirect_to = '/';
+        //     return redirect($redirect_to);
+        // }
+       
     }
 
     /**

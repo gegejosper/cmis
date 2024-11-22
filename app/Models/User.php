@@ -51,4 +51,22 @@ class User extends Authenticatable
     // {
     //     $this->assignRole($role);  // Assigns the role using the Spatie package method
     // }
+
+    public function role_details(){
+        return $this->belongsTo('App\Models\Role_user', 'id', 'user_id');
+    }
+
+    public function roles(){
+        //return $this->belongsToMany('App\Models\Role');
+        return $this->belongsToMany(Role::class, 'role_users', 'user_id', 'role_id');
+    }
+    
+
+
+    public function hasRole($role){
+        if($this->roles()->where('name', $role)->first()){
+            return true; 
+        }
+        return false; 
+    }
 }

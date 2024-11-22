@@ -43,12 +43,12 @@
         <h2 class="text-center">Blocks Availability</h2>
             <div class="row">
             @foreach($graveyard->block_details as $block)
-                <div class="col-lg-1 mb-3">
+                <div class="col-lg-1 mb-3 text-white">
                     <div 
                         class="block-square d-flex justify-content-center align-items-center text-white"
                         style="background-color: {{ $block->status == 'available' ? 'green' : 'red' }};"
                     >
-                        <p class="mb-0">{{ $block->block_name }}</p>
+                        <p class="mb-0 text-white">{{ $block->block_name }}</p>
                         @if($block->status == 'not available')
                             <!-- Deceased Initials -->
                             <span 
@@ -57,7 +57,7 @@
                                 data-first-name="{{ $block->deceased_details->first_name }}"
                                 data-last-name="{{ $block->deceased_details->last_name }}"
                                 data-age="{{ $block->deceased_details->age }}"
-                                data-date-of-burial="{{ $block->deceased_details->date_of_burial }}"
+                                data-date-of-burial="{{ $block->deceased_details->dob }}"
                                 data-remarks="{{ $block->deceased_details->remarks ?? 'N/A' }}"
                                 data-bs-toggle="modal" 
                                 data-bs-target="#deceasedModal"
@@ -83,9 +83,7 @@
                 <div class="modal-body">
                     <p><strong>First Name:</strong> <span id="modal-first-name"></span></p>
                     <p><strong>Last Name:</strong> <span id="modal-last-name"></span></p>
-                    <p><strong>Age:</strong> <span id="modal-age"></span></p>
                     <p><strong>Date of Burial:</strong> <span id="modal-date-of-burial"></span></p>
-                    <p><strong>Remarks:</strong> <span id="modal-remarks"></span></p>
                 </div>
             </div>
         </div>

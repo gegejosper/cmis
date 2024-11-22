@@ -9,13 +9,13 @@ use App\Http\Controllers\DeceasedController;
 use App\Http\Controllers\GraveyardController;
 use App\Http\Controllers\VisitorController;
 use App\Http\Controllers\BlockController;
-
+use App\Http\Controllers\StaffController;
 
 Route::get('/', [FrontController::class, 'index']);
 Route::get('/about', [FrontController::class, 'about']);
 Route::get('/contact', [FrontController::class, 'contact']);
-Route::get('/locations', [FrontController::class, 'locations']);
-Route::get('/locations/view/{graveyard_id}', [FrontController::class, 'view_locations']);
+Route::get('/gardens', [FrontController::class, 'locations']);
+Route::get('/gardens/view/{graveyard_id}', [FrontController::class, 'view_locations']);
 Route::get('/search', [FrontController::class, 'search']);
 Route::get('/gallery', [FrontController::class, 'gallery']);
 Route::post('/search', [FrontController::class, 'search_result']);
@@ -30,10 +30,14 @@ Route::middleware('auth')->name('panel.')->prefix('panel/')->group(function () {
 
     Route::resource('deceaseds', DeceasedController::class);
     Route::resource('visitors', VisitorController::class);
+    Route::resource('users', UserController::class);
     Route::post('deceaseds/search', [AdminController::class, 'search_deceaseds']);
     Route::resource('graveyards', GraveyardController::class);
     Route::resource('blocks', BlockController::class);
     Route::resource('visitors', VisitorController::class);
+});
+Route::middleware('auth')->name('panel.')->prefix('panel/')->group(function () {
+    Route::get('staff', [StaffController::class, 'index'])->name('staff');
 });
 
 require __DIR__.'/auth.php';

@@ -53,17 +53,29 @@ class BlockController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Block $block)
     {
         //
+        $block->load('deceased_details');
+        return view('blocks.edit', compact('block'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Block $block)
     {
         //
+        $request->validate([
+            'block_name' => 'required',
+            'status' => 'required'
+        ]);
+
+        $block->update($request->only([
+            'block_name',
+            'status'
+        ]));
+        return redirect('/panel/blocks/'.$block->id.'/edit')->with('success', 'Decease deleted successfully.');
     }
 
     /**

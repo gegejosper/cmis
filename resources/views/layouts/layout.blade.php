@@ -30,25 +30,35 @@
                 <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                     <div class="sb-sidenav-menu">
                         <div class="nav">
+                            @can('access-admin')
                             <div class="sb-sidenav-menu-heading">Administration</div>
+                            @endcan
+                            @can('access-staff')
+                            <div class="sb-sidenav-menu-heading">STAFF</div>
+                            @endcan
                             <a class="nav-link" href="/panel/dashboard">
                                 <span class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></span> <span class="sb-nav-link-text">Dashboard</span>
                             </a>
                             <!-- <a class="nav-link" href="/panel/blocks">
                                 <span class="sb-nav-link-icon"><i class="fas fa-th-large"></i></span> <span class="sb-nav-link-text">Blocks</span>
                             </a> -->
-                            <a class="nav-link" href="/panel/graveyards">
-                                <span class="sb-nav-link-icon"><i class="fas fa-th-large"></i></span> <span class="sb-nav-link-text">Graveyards</span>
-                            </a>
+                           
+                            
                             <a class="nav-link" href="/panel/deceaseds">
                                 <span class="sb-nav-link-icon"><i class="fas fa-person-circle-minus"></i></span> <span class="sb-nav-link-text">Deceaseds</span>
                             </a>
                             <a class="nav-link" href="/panel/visitors">
                                 <span class="sb-nav-link-icon"><i class="fa-solid fa-people-arrows"></i></span><span class="sb-nav-link-text">Visitors</span>
                             </a>
+                            @can('access-admin')
+                            <a class="nav-link" href="/panel/graveyards">
+                                <span class="sb-nav-link-icon"><i class="fas fa-th-large"></i></span> <span class="sb-nav-link-text">Graveyards</span>
+                            </a>
                             <a class="nav-link" href="/panel/users">
                                 <span class="sb-nav-link-icon"><i class="fas fa-user"></i></span><span class="sb-nav-link-text">User Management</span>
                             </a>
+                            
+                            @endcan
                             <a class="nav-link" href="/panel/profile">
                                 <span class="sb-nav-link-icon"><i class="fas fa-user-shield"></i></span><span class="sb-nav-link-text">Account</span>
                             </a>

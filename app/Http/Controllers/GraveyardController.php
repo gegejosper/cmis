@@ -28,8 +28,7 @@ class GraveyardController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
+    public function store(Request $request){
         //
         $request->validate([
             'graveyard_name' => 'required',
@@ -65,7 +64,7 @@ class GraveyardController extends Controller
      */
     public function show(Graveyard $graveyard){
         //
-        $graveyard->load('block_details.deceased_details');
+        $graveyard->load('block_details.deceased_details')->take(5);
         $number_of_block_available = $graveyard->block_details->where('status', 'available')->count();
         //dd($graveyard);
         return view('graveyards.graveyard', compact('graveyard', 'number_of_block_available'));
@@ -94,6 +93,24 @@ class GraveyardController extends Controller
             'graveyard_name',
             'block_numbers'
         ]));
+
+        // Handle image upload if a new image is provided
+    if ($request->hasFile('graveyard_image')) {
+        // Delete the old image if it exists
+        if ($graveyard->graveyard_image && file_exists(public_path($graveyard->graveyard_image))) {
+            unlink(public_path($graveyard->graveyard_image));
+        }
+
+        // Upload the new image
+        $file = $request->file('graveyard_image');
+        $filename = time() . '_' . $file->getClientOriginalName();
+        $file_path = 'graveyards/' . $filename; // Define path in public folder
+        $file->move(public_path('graveyards'), $filename);
+
+        // Update the image path in the database
+        $graveyard->graveyard_image = $file_path;
+        $graveyard->save();
+    }
         return redirect()->route('panel.graveyards.index')->with('success', 'Graveyard updated successfully.');
     }
 

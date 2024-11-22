@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Deceased;
 use App\Models\Graveyard;
 use App\Models\Block;
+use App\Models\BlockDeceased;
 use App\Models\Visitor;
 class DeceasedController extends Controller
 {
@@ -93,8 +94,12 @@ class DeceasedController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
-    {
+    public function destroy(Deceased $deceased){
         //
+        $block_id = $deceased->block_id;
+        $delete_visitors = Visitor::where('deceased_id', $deceased->id)->delete();
+        $deceased->delete();
+
+        return redirect('/panel/blocks/'.$block_id.'/edit')->with('success', 'Deceased deleted successfully.');
     }
 }
