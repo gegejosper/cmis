@@ -35,7 +35,14 @@ class GraveyardController extends Controller
             'block_numbers' => 'required',
         ]);
 
-        $graveyard = Graveyard::create($request->all());
+        // $graveyard = Graveyard::create($request->all());
+        $graveyard = new Graveyard();
+
+        $graveyard->graveyard_name = $request->input('graveyard_name');
+        $graveyard->block_numbers = $request->input('block_numbers');
+        $graveyard->status = $request->input('status');
+        $graveyard->save();
+        
         $block_number = 1;
         while($request->block_numbers >= $block_number ){
             $block = new Block();
