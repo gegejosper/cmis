@@ -11,7 +11,8 @@ class Graveyard extends Model
     protected $fillable = [
         'graveyard_name',
         'block_numbers',
-        'status'
+        'status',
+        'graveyard_image'
     ];
 
     public function block_details(){
