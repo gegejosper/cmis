@@ -39,6 +39,7 @@ class DeceasedController extends Controller
             'first_name' => 'required',
             'last_name' => 'required',
             'dob' => 'required',
+            'dod' => 'required',
             'block_id' => 'required',
             'graveyard_id' => 'required',
         ]);
@@ -87,7 +88,10 @@ class DeceasedController extends Controller
         $deceased->update($request->only([
             'first_name',
             'last_name', 
-            'dob'
+            'middle_name', 
+            'dob',
+            'dod',
+            'date_of_birth'
         ]));
         return redirect()->route('panel.deceaseds.index')->with('success', 'Deceased updated successfully.');
     }

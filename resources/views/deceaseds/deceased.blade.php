@@ -40,13 +40,18 @@
                         <p class="mb-2"><strong>Last Name:</strong></p>
                         <p class="text-muted">{{ $deceased->last_name }}</p>
                     </div>
-                </div>
-                <div class="row">
-                    <!-- Second Column -->
                     <div class="col-md-3 mb-3">
                         <p class="mb-2"><strong>Date of Birth:</strong></p>
                         <p class="text-muted">{{ $deceased->date_of_birth }}</p>
                     </div>
+                </div>
+                <div class="row">
+                    <!-- Second Column -->
+                    <div class="col-md-3 mb-3">
+                        <p class="mb-2"><strong>Date of Death:</strong></p>
+                        <p class="text-muted">{{ $deceased->dod }}</p>
+                    </div>
+                    
                     <div class="col-md-3 mb-3">
                         <p class="mb-2"><strong>Date of Burial:</strong></p>
                         <p class="text-muted">{{ $deceased->dob }}</p>

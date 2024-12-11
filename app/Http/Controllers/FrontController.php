@@ -42,7 +42,8 @@ class FrontController extends Controller
         $keyword = $req->q;
         $deceaseds = Deceased::where(function($query) use ($searchTerm){
                             $query->where('first_name','LIKE', $searchTerm)
-                            ->orWhere('last_name','LIKE', $searchTerm);
+                            ->orWhere('last_name','LIKE', $searchTerm)
+                            ->orWhere('middle_name','LIKE', $searchTerm);
                         })->orderBy('last_name', 'asc')
                         ->orderBy('first_name', 'asc')
                         ->with('block_details', 'graveyard_details')->get();

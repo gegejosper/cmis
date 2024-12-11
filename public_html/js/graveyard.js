@@ -26,6 +26,7 @@ $(document).ready(function() {
                 'middle_name': $('input[name=middle_name]').val(),
                 'last_name': $('input[name=last_name]').val(),
                 'dob': $('input[name=dob]').val(),
+                'dod': $('input[name=dod]').val(),
                 'date_of_birth': $('input[name=date_of_birth]').val(),
                 'block_id': $('input[name=block_id]').val(),
                 'graveyard_id': $('input[name=graveyard_id]').val(),

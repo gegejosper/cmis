@@ -138,6 +138,10 @@
                                 <input type="date" name="date_of_birth" value="{{ old('date_of_birth') }}" class="form-control">
                             </div>
                             <div class="col-lg-4">
+                                <label>Date of Death</label>
+                                <input type="date" name="dod" value="{{ old('dod') }}" class="form-control" required>
+                            </div>
+                            <div class="col-lg-4">
                                 <label>Date of Burial</label>
                                 <input type="date" name="dob" value="{{ old('dob') }}" class="form-control" required>
                             </div>

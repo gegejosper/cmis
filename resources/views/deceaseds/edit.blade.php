@@ -27,8 +27,20 @@
                                     <input type="text" name="first_name" value="{{ $deceased->first_name }}" class="form-control">
                                 </div>
                                 <div class="col-lg-3">
+                                <label>Middle Name </label>
+                                <input type="text" name="middle_name" value="{{ $deceased->middle_name }}" class="form-control">
+                                </div>
+                                <div class="col-lg-3">
                                 <label>Last Name </label>
                                 <input type="text" name="last_name" value="{{ $deceased->last_name }}" class="form-control">
+                                </div>
+                                <div class="col-lg-3">
+                                <label>Date of Birth</label>
+                                    <input type="date" name="date_of_birth" value="{{ $deceased->date_of_birth }}" class="form-control">
+                                </div>
+                                <div class="col-lg-3">
+                                <label>Date of Death</label>
+                                    <input type="date" name="dod" value="{{ $deceased->dod }}" class="form-control">
                                 </div>
                                 <div class="col-lg-3">
                                 <label>Date of Funeral</label>

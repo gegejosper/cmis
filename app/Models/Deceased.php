@@ -13,6 +13,7 @@ class Deceased extends Model
         'last_name',
         'middle_name',
         'dob',
+        'dod',
         'date_of_birth', 
         'block_id',
         'graveyard_id'
