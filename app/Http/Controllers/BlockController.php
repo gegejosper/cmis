@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Block;
 use App\Models\Deceased;
+use App\Models\Visitor;
 
 class BlockController extends Controller
 {
