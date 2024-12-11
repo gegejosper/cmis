@@ -77,7 +77,7 @@ class BlockController extends Controller
             'block_name',
             'status'
         ]));
-        return redirect('/panel/blocks/'.$block->id.'/edit')->with('success', 'Decease deleted successfully.');
+        return redirect('/panel/blocks/'.$block->id.'/edit')->with('success', 'Block updated successfully.');
     }
 
     /**
