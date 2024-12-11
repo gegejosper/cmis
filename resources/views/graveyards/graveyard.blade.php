@@ -83,16 +83,18 @@
                                                     <a class="btn btn-warning btn-sm" href="/panel/blocks/{{ $block->id }}/edit" title="Edit Block">
                                                         <i class="fa fa-pencil"></i>
                                                     </a>
-                                                    <!-- Uncomment if delete is needed -->
-                                                    
+
+                                                    <!-- Delete Button -->
                                                     <form action="{{ route('panel.blocks.destroy', $block->id) }}" method="POST" style="display:inline;">
                                                         @csrf
                                                         @method('DELETE')
-                                                        <button type="submit" class="btn btn-danger btn-sm" title="Delete">
+                                                        <button type="submit" 
+                                                                class="btn btn-danger btn-sm" 
+                                                                title="Delete" 
+                                                                @if($block->status !== 'available') disabled @endif>
                                                             <i class="fa fa-times"></i>
                                                         </button>
                                                     </form>
-                                                   
                                                 </td>
                                             </tr>
                                         @endforeach
