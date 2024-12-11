@@ -37,6 +37,32 @@ class AdminController extends Controller
          return response()->json(['success' => "Role '{$role}' assigned to user."]);
     }
 
+    public function reports(Request $request){
+        // $deceaseds = Deceased::orderBy('id', 'asc')
+        //             ->with('block_details', 'graveyard_details')
+        //             ->get();
+        // return view('reports', compact('deceaseds'));
+        // Initialize the query
+        $query = Deceased::orderBy('id', 'asc')
+        ->with('block_details', 'graveyard_details');
+
+        // Filter by month if provided
+        if ($request->has('month') && $request->month) {
+        $query->whereMonth('dob', $request->month);
+        }
+
+        // Filter by year if provided
+        if ($request->has('year') && $request->year) {
+        $query->whereYear('dob', $request->year);
+        }
+
+        // Get the filtered results
+        $deceaseds = $query->get();
+
+        // Return the view with the deceaseds and old input for filtering
+        return view('reports', compact('deceaseds'));
+    }
+
     public function search_deceaseds(Request $req){
         $searchTerm = '%'.$req->search_query.'%';
         $keyword = $req->search_query;

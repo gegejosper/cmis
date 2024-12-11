@@ -23,8 +23,10 @@ $(document).ready(function() {
             data: {
                 '_token': $('input[name=_token]').val(),
                 'first_name': $('input[name=first_name]').val(),
+                'middle_name': $('input[name=middle_name]').val(),
                 'last_name': $('input[name=last_name]').val(),
                 'dob': $('input[name=dob]').val(),
+                'date_of_birth': $('input[name=date_of_birth]').val(),
                 'block_id': $('input[name=block_id]').val(),
                 'graveyard_id': $('input[name=graveyard_id]').val(),
             },

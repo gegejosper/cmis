@@ -46,20 +46,14 @@
                 <div class="col-lg-1 mb-3 text-white">
                     <div 
                         class="block-square d-flex justify-content-center align-items-center text-white"
-                        style="background-color: {{ $block->status == 'available' ? 'green' : 'red' }};"
+                        style="background-color: 
+                                {{ 
+                                    $block->status == 'available' ? 'green' : 
+                                    ($block->status == 'reserved' ? 'orange' : 'red') 
+                                }};"
                     >
                         <p class="mb-0 text-white">{{ $block->block_name }}</p>
-                        @if($block->status == 'not available')
-                            <!-- Deceased Initials -->
-                            <!-- <span 
-                                class="deceased-details" 
-                                data-id="{{ $block->id }}"
-                                data-bs-toggle="modal" 
-                                data-bs-target="#deceasedModal"
-                            >
-                                
-                            </span> -->
-
+                        <!-- @if($block->status == 'not available')
                             <span 
                                 class="deceased-details text-center" 
                                 data-block-id="{{ $block->id }}" 
@@ -69,6 +63,26 @@
                                 style="font-size:8px;"
                             >
                                NOT AVAILABLE
+                            </span>
+                        @endif -->
+                        @if($block->status == 'not available')
+                            <span 
+                                class="deceased-details text-center badge bg-secondary" 
+                                data-block-id="{{ $block->id }}" 
+                                data-deceased="{{ $block->deceased_details->toJson() }}"
+                                data-bs-toggle="modal" 
+                                data-bs-target="#deceasedModal"
+                                style="font-size:8px;"
+                            >
+                                NOT AVAILABLE
+                            </span>
+                        @elseif($block->status == 'available')
+                            <span class="badge bg-success text-center" style="font-size:8px;">
+                                AVAILABLE
+                            </span>
+                        @elseif($block->status == 'reserved')
+                            <span class="badge bg-warning text-center" style="font-size:8px;">
+                                RESERVED
                             </span>
                         @endif
                     </div>

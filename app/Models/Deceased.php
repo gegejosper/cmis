@@ -11,7 +11,9 @@ class Deceased extends Model
     protected $fillable = [
         'first_name',
         'last_name',
-        'dob', 
+        'middle_name',
+        'dob',
+        'date_of_birth', 
         'block_id',
         'graveyard_id'
     ];

@@ -27,7 +27,8 @@ Route::middleware('auth')->name('panel.')->prefix('panel/')->group(function () {
     Route::get('profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-
+    Route::get('reports/', [AdminController::class, 'reports'])->name('reports');
+    Route::post('reports/', [AdminController::class, 'reports'])->name('filter_reports');
     Route::resource('deceaseds', DeceasedController::class);
     Route::resource('visitors', VisitorController::class);
     Route::resource('users', UserController::class);

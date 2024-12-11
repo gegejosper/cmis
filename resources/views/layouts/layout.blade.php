@@ -50,6 +50,9 @@
                             <a class="nav-link" href="/panel/visitors">
                                 <span class="sb-nav-link-icon"><i class="fa-solid fa-people-arrows"></i></span><span class="sb-nav-link-text">Visitors</span>
                             </a>
+                            <a class="nav-link" href="/panel/reports">
+                                <span class="sb-nav-link-icon"><i class="fa-solid fa-folder"></i></span><span class="sb-nav-link-text">Reports</span>
+                            </a>
                             @can('access-admin')
                             <a class="nav-link" href="/panel/graveyards">
                                 <span class="sb-nav-link-icon"><i class="fas fa-th-large"></i></span> <span class="sb-nav-link-text">Graveyards</span>

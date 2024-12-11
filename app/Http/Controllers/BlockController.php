@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Block;
+use App\Models\Deceased;
 
 class BlockController extends Controller
 {
@@ -81,8 +82,14 @@ class BlockController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Block $block)
     {
         //
+        //dd($block);
+        $delete_deceased = Deceased::where('block_id', $block->id)->delete();
+        $delete_visitors = Visitor::where('deceased_id', $delete_deceased->id)->delete();
+        $block->delete();
+
+        return redirect()->route('panel.graveyards.show', $block->graveyard_id)->with('success', 'Block deleted successfully.');
     }
 }

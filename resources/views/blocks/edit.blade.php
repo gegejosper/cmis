@@ -65,6 +65,7 @@
                                         <option value="{{ $block->status }}" selected>{{ ucfirst($block->status) }}</option>
                                         <option value="available">Available</option>
                                         <option value="not available">Not Available</option>
+                                        <option value="reserved">Reserved</option>
                                     </select>
                                 </div>
 

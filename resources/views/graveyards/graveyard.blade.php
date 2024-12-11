@@ -69,7 +69,10 @@
                                                     @endif
                                                 </td>
                                                 <td>
-                                                    <span class="badge {{ $block->status === 'available' ? 'bg-success' : 'bg-secondary' }}">
+                                                    <span class="badge {{ 
+                                                            $block->status === 'available' ? 'bg-success' : 
+                                                            ($block->status === 'reserved' ? 'bg-warning' : 'bg-secondary') 
+                                                        }}">
                                                         {{ ucfirst($block->status) }}
                                                     </span>
                                                 </td>
@@ -81,15 +84,15 @@
                                                         <i class="fa fa-pencil"></i>
                                                     </a>
                                                     <!-- Uncomment if delete is needed -->
-                                                    <!--
-                                                    <form action="{{ route('panel.graveyards.destroy', $graveyard->id) }}" method="POST" style="display:inline;">
+                                                    
+                                                    <form action="{{ route('panel.blocks.destroy', $block->id) }}" method="POST" style="display:inline;">
                                                         @csrf
                                                         @method('DELETE')
                                                         <button type="submit" class="btn btn-danger btn-sm" title="Delete">
                                                             <i class="fa fa-times"></i>
                                                         </button>
                                                     </form>
-                                                    -->
+                                                   
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -115,17 +118,28 @@
                         @csrf
                         <div class="row mb-10">
                             <div class="col-lg-4">
-                                <label>First Name </label>
+                                <label>First Name</label>
                                 <input type="text" name="first_name" value="{{ old('first_name') }}" class="form-control" required>
                             </div>
                             <div class="col-lg-4">
-                            <label>Last Name </label>
-                            <input type="text" name="last_name" value="{{ old('last_name') }}" class="form-control" required>
+                                <label>Middle Name</label>
+                                <input type="text" name="middle_name" value="{{ old('middle_name') }}" class="form-control">
                             </div>
                             <div class="col-lg-4">
-                            <label>Date of Burial</label>
+                                <label>Last Name</label>
+                                <input type="text" name="last_name" value="{{ old('last_name') }}" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="row mb-10">
+                            <div class="col-lg-4">
+                                <label>Date of Birth</label>
+                                <input type="date" name="date_of_birth" value="{{ old('date_of_birth') }}" class="form-control">
+                            </div>
+                            <div class="col-lg-4">
+                                <label>Date of Burial</label>
                                 <input type="date" name="dob" value="{{ old('dob') }}" class="form-control" required>
                             </div>
+                            
                         </div>
                         <input type="hidden" name="block_id" id="block_id">
                         <input type="hidden" name="graveyard_id" id="graveyard_id">

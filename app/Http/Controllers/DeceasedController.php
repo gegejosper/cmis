@@ -42,6 +42,7 @@ class DeceasedController extends Controller
             'block_id' => 'required',
             'graveyard_id' => 'required',
         ]);
+        //dd($request);
         $block = Block::find($request->block_id);
         $block->update(['status' => 'not available']);
         $deceased = Deceased::create($request->all());
