@@ -87,8 +87,20 @@ class BlockController extends Controller
     {
         //
         //dd($block);
-        $delete_deceased = Deceased::where('block_id', $block->id)->delete();
-        $delete_visitors = Visitor::where('deceased_id', $delete_deceased->id)->delete();
+        // $delete_deceased = Deceased::where('block_id', $block->id)->delete();
+        // $delete_visitors = Visitor::where('deceased_id', $delete_deceased->id)->delete();
+        $deceased = Deceased::where('block_id', $block->id)->get();
+
+        // Check if any deceased records exist
+        if ($deceased->isNotEmpty()) {
+            // Delete the corresponding Visitor records
+            Visitor::whereIn('deceased_id', $deceased->pluck('id'))->delete();
+
+            // Now, delete the Deceased records
+            $deceased->each(function($record) {
+                $record->delete();
+            });
+        }
         $block->delete();
 
         return redirect()->route('panel.graveyards.show', $block->graveyard_id)->with('success', 'Block deleted successfully.');
